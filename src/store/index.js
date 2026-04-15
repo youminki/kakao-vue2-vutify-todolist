@@ -31,6 +31,12 @@ export default new Vuex.Store({
     mutationsDelTodo(state, id) {
       state.todos = state.todos.filter((todo) => todo.id != id);
     },
+    mutationsModTodo(state, todo) {
+      let idx = state.todos.findIndex((x) => x.id == todo.id);
+      if (idx > -1) {
+        state.todos[idx] = todo;
+      }
+    },
   },
   actions: {
     actionsAddTodo({ commit }, todo) {
@@ -38,6 +44,9 @@ export default new Vuex.Store({
     },
     actionsDelTodo({ commit }, id) {
       commit("mutationsDelTodo", id);
+    },
+    actionsModTodo({ commit }, todo) {
+      commit("mutationsModTodo", todo);
     },
   },
   modules: {},

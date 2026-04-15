@@ -2,13 +2,23 @@
   <v-container fluid>
     <v-row class="mb-3" justify="center" align="center">
       <v-col cols="4">
-        {{ todo.title }}
+        <h3 v-if="!editing">{{ todo.title }}</h3>
+        <v-text-field
+          v-else
+          v-model="todoText"
+          label="Edit"
+          outlined
+          dense
+          hide-details
+        ></v-text-field>
       </v-col>
       <v-col cols="1">
-        <v-btn block color="primary">Edit</v-btn>
+        <v-btn @click="modTodo(todo)" block large color="primary">
+          {{ editing ? "Save" : "Edit" }}
+        </v-btn>
       </v-col>
       <v-col cols="1">
-        <v-btn block color="error" @click="actionsDelTodo(todo.id)"
+        <v-btn @click="actionsDelTodo(todo.id)" block large color="error"
           >Delete</v-btn
         >
       </v-col>
@@ -24,7 +34,18 @@ export default {
     todo: {},
   },
   methods: {
-    ...mapActions(["actionsDelTodo"]),
+    ...mapActions(["actionsDelTodo", "actionsModTodo"]),
+    modTodo(todo) {
+      this.editing = !this.editing;
+      if (this.editing) this.actionsModTodo(todo);
+      else todo.title = this.todoText;
+    },
+  },
+  data() {
+    return {
+      todoText: "",
+      editing: null,
+    };
   },
 };
 </script>
