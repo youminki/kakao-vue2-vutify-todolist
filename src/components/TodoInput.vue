@@ -5,9 +5,7 @@
         <v-text-field v-model="todoText" outlined></v-text-field>
       </v-col>
       <v-col cols="1">
-        <v-btn @click="actionsAddTodo(todoText)" block x-large color="primary"
-          >Add</v-btn
-        >
+        <v-btn @click="addTodo" block x-large color="primary">Add</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -15,6 +13,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import { v1 } from "uuid";
 
 export default {
   data() {
@@ -24,8 +23,12 @@ export default {
   },
   methods: {
     ...mapActions(["actionsAddTodo"]),
+    addTodo() {
+      this.actionsAddTodo({
+        id: v1(),
+        title: this.todoText,
+      });
+    },
   },
 };
 </script>
-
-<style></style>
