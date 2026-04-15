@@ -26,21 +26,19 @@ export default new Vuex.Store({
   mutations: {
     mutationsAddTodo(state, todo) {
       state.todos.push(todo);
-      console.log(state.todos);
+      console.log(todo);
+    },
+    mutationsDelTodo(state, id) {
+      state.todos = state.todos.filter((todo) => todo.id != id);
     },
   },
   actions: {
     actionsAddTodo({ commit }, todo) {
-      console.log(todo);
-
-      const nextTodo = {
-        id: Date.now(),
-        title: todo,
-      };
-
-      commit("mutationsAddTodo", nextTodo);
+      commit("mutationsAddTodo", todo);
+    },
+    actionsDelTodo({ commit }, id) {
+      commit("mutationsDelTodo", id);
     },
   },
-
   modules: {},
 });

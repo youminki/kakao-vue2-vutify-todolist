@@ -2,7 +2,11 @@
   <v-container fluid>
     <v-row class="mt-6" justify="center">
       <v-col cols="4">
-        <v-text-field v-model="todoText" outlined></v-text-field>
+        <v-text-field
+          @change="todoTextChg"
+          :value="todoText"
+          outlined
+        ></v-text-field>
       </v-col>
       <v-col cols="1">
         <v-btn @click="addTodo" block x-large color="primary">Add</v-btn>
@@ -23,11 +27,15 @@ export default {
   },
   methods: {
     ...mapActions(["actionsAddTodo"]),
+    todoTextChg(e) {
+      this.todoText = e;
+    },
     addTodo() {
       this.actionsAddTodo({
         id: v1(),
         title: this.todoText,
       });
+      this.todoText = "";
     },
   },
 };
